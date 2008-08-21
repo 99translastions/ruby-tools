@@ -1,0 +1,15 @@
+api_key: YOUR_API_KEY
+sample_file:
+  path: path/to/your/master/file
+  type: yml
+  locale: en
+  translations:
+    de: path/to/your/german/translation
+    es: path/to/your/spanish/translation
+sample_file:
+  path: another/path
+  type: yml
+  locale: en
+  translations:
+    de: another/path/de
+    es: another/path/es
