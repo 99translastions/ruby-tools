@@ -9,13 +9,14 @@ namespace :trans do
    end
    
    desc "Downloads translation files from the server."
-   task :upload do
+   task :download do
      config = load_config
      puts "Unable to open config" and return unless config
 
      api_key = config['api_key']
-     puts 'Please configure 99translations in file #{config_file}" and return if api_key == 'YOUR_API_KEY'
+     puts "Please configure 99translations in file #{config_file}" and return if api_key == 'YOUR_API_KEY'
 
+puts "AAA = #{api_key} #{config_file}"
      
    end
 
