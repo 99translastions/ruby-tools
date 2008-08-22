@@ -1,1 +1,37 @@
-Test
+99translations.com :: Ruby Tools
+
+This package is set of rake tasks to automate translation of Ruby (on Rails) applications. 
+
+The plugin installs configuration file 'config/trans.yml' which defines API key that you can get on your project page at 99translations.com and list of translation files.
+
+-----------------------------------------
+api_key: YOUR_API_KEY
+sample_file:
+  path: path/to/your/master/file
+  type: yml
+  translations:
+    de: path/to/your/german/translation
+    es: path/to/your/spanish/translation
+sample_file2:
+  path: another/path
+  type: yml
+  translations:
+    de: another/path/de
+    es: another/path/es
+-----------------------------------------
+
+In this example 'sample_file' and 'sample_file2' are 2 translation files. Parameter 'path' defines relative path to their location, parameter 'type' can be only of 'yml', 'gettext', 'java' , 'java_utf8' and describes format of the file, translations in form 'locale: path' are listed under 'translations' key.
+
+You have to customize this file before using the plugin. 
+
+As soon as your configuration is done you can use 2 rake tasks 'trans:upload' and 'trans:download'. Upload task pushes master translation files to the server (99translations.com) so external translators can start working on it. Download task gets translations from the server and places them under listed locations.
+
+Example:
+
+rake trans:upload
+rake trans:download
+
+Feel free to ask any questions at our forum: http://99translations.com/forums/3 or directly to our support email: support@99translations.com.
+
+Best Regards.
+99translations.com
