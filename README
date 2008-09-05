@@ -33,5 +33,10 @@ rake trans:download
 
 Feel free to ask any questions at our forum: http://99translations.com/forums/3 or directly to our support email: support@99translations.com.
 
+RAILS 2.2 TRANSLATIONS
+----------------------
+
+rake trans:update_all - the task specifically designed for Rails 2.2 i18n. Read more at http://99translations.com/blog/rails-plugin-updated 
+
 Best Regards.
 99translations.com
