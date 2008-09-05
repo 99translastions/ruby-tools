@@ -1,6 +1,7 @@
 namespace :trans do  
 
    require 'yaml'      
+   require 'ftools'
    require 'net/http'
    
    RAILS_API_KEY = '72719952057'
@@ -73,12 +74,15 @@ namespace :trans do
        puts "WARNING: unable find project information. Please check API key." 
        return 
      end
-     project_info['files'].keys do |file|
-       puts "... updating #{file} (#{project_info['files'][file].size} locales)"
-       project_info['files'][file].each_pair do |locale, status|
-         puts "... downloading #{locale} - #{status}"
-         trans = download_yml('99translations.com', "download/#{api_key}/#{file}/#{locale}")
-         merge_translations(locale, trans)
+     files = project_info[:files]
+     if files
+       files.each_key do |file|
+         puts "... updating #{file} (#{files[file].size} locales)"
+         files[file].each_pair do |locale, status|
+           puts "... downloading #{locale} - #{status} complete"
+           trans = download_yml('99translations.com', "/download/#{api_key}/#{file}/#{locale}")
+           merge_translations(locale, trans)
+         end
        end
      end
    end
@@ -88,17 +92,16 @@ namespace :trans do
    ##
    def merge_translations(locale, hash)
      file = File.join(RAILS_ROOT, 'config', 'locales')
-     File.mkdir_p(file)
+     File.makedirs(file)
      loc = File.join(file, "#{locale}.yml")
      if File.exists?(loc)
-       cur = YAML.load(loc)
+       cur = YAML.load(File.read(loc))
      else 
        cur = { locale => Hash.new }
      end
-     res = cur[locale].merge(hash[locale])
-     File.copy(loc, "#{loc}.bak")
+     cur[locale].merge!(hash[locale])
      File.open(loc, 'w') do |f| 
-        f << res.to_yaml # we may use ya2yaml later to produce real UTF-8 .yml files
+        f << cur.to_yaml # we may use ya2yaml later to produce real UTF-8 .yml files
       end
    end
    
