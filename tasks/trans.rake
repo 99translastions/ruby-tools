@@ -18,7 +18,7 @@ namespace :trans do
        next if f == 'api_key'
        puts "Processing file #{f}"
        puts "... uploading #{config[f]['path']}"
-       upload_file('99translations.com', '/upload_master/#{api_key}/#{f}', File.join(RAILS_ROOT, config[f]['path']))
+       upload_file('99translations.com', "/upload_master/#{api_key}/#{f}", File.join(RAILS_ROOT, config[f]['path']))
      end  
       
    end
@@ -117,10 +117,11 @@ namespace :trans do
       mp = Multipart::MultipartPost.new
       query, headers = mp.prepare_query(params)
 
+      resp = nil
       Net::HTTP.start(host) do |http|
         http.read_timeout = TIMEOUT_SECONDS
         begin
-          resp http.post(path, query, headers)
+          resp = http.post(path, query, headers)
         rescue => e
           puts "ERROR: POST failed #{e}... #{Time.now}"
           return
